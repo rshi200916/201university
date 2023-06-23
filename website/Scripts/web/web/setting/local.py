@@ -14,7 +14,7 @@ import os
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-from django.conf import global_settings
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -145,6 +145,37 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/0",
+        "OPTION": {
+            "CLIENT_CLASS":"django_redis.client.DefaultClient",
+        }
+
+    },
+    "session": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTION": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+
+    },
+    "verify_code": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/2",
+        "OPTION": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+
+    },
+}
+# SESSION_ENGINE= " django.contrib.sessions.backends.cache"
+# SESSION_CACHE_ALIAS = "session"
+
 
 
 
