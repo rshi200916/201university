@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block register %}
+
+{% endblock %}
+
+{% block homepage %}
+    <script src="{{ static('js/query.js') }}">
+
+    </script>
+<script>
+    let tag=document.getElementsByClassName('btn');
+
+
+        if(tag[1].id=='Register') {
+            tag[1].onclick = function () {
+                window.location = "{{ url('register') }}";
+
+            }
+
+        }else if(tag[1].id='Logout'){
+            tag[1].onclick=function (){
+                $.get('/Logout/', function(){
+                    location.reload();
+                })
+            }
+
+            }
+
+
+</script>
+{% endblock %}

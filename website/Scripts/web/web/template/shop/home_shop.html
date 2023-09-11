@@ -1,0 +1,191 @@
+{% extends 'base_shop.html' %}
+
+
+{% block home %}
+			<nav class="navbar navbar-expand-lg navbar-dark btn-danger rounded">
+			    <div class="container-fluid"><a class="navbar-brand" href="javascript:">kind</a>
+			        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navcnt3" aria-controls="navcnt3" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
+			        </button>
+			        <div class="collapse navbar-collapse" id="navcnt3">
+			            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			                <li class="nav-item">
+			                    <a class="nav-link active" aria-current="page" href="/shop/kind/furniture/">
+			                        <i class="bi bi-bookmark me-1"></i>Furniture
+			                    </a>
+			                </li>
+			                <li class="nav-item">
+			                    <a class="nav-link" href="/shop/kind/book/">
+			                        <i class="bi bi-bookmark me-1"></i>Book
+			                    </a>
+			                </li>
+			                <li class="nav-item">
+			                    <a class="nav-link" href="/shop/kind/kitchenware/">
+			                        <i class="bi bi-bookmark me-1"></i>Kitchenware
+			                    </a>
+			                </li>
+			                <li class="nav-item">
+			                    <a class="nav-link" href="/shop/kind/bags/">
+			                        <i class="bi bi-bookmark me-1"></i>Luggage and Bags
+			                    </a>
+			                </li>
+			            </ul>
+
+			        </div>
+			    </div>
+			</nav>
+        <div class="card border-0 shadow-sm">
+		        <div class="row g-0">
+		            <div class="col-md-4 border-end">
+		                <img src="{{ good.img_url.url }}" class="img-fluid" style="width: 600px;height: 400px">
+
+		            </div>
+		            <div class="col-md-8">
+		                <div class="card-body">
+{#                             <div class="col">#}
+{#		           <div class="btn-group" role="group" aria-label="Basic example">#}
+{#		            <button type="button" class="btn btn-danger"><i class="bi bi-heart"></i>#}
+{#		            </button>#}
+{#		              </div>#}
+{#		            </div>#}
+		                    <h4 class="card-title mb-4">
+		                        {{ good.name }}
+
+{#                             <h4 class="card-title mb-4">#}
+{#		                        {{ good.comment }}#}
+		                    </h4>
+		                    <div class="row g-3 align-items-center">
+                                <div class="col-sm-3">seller description</div>
+		                        <div class="col-sm-9">
+		                            <h4 class="fw-bold text-danger" id="goods_comment">{{ good.comment }}</h4>
+		                        </div>
+		                        <div class="col-sm-3">price</div>
+		                        <div class="col-sm-9">
+		                            <h4 class="fw-bold text-danger" id="goods_price">{{ good.price }}</h4>
+		                        </div>
+{#		                        <div class="col-12">#}
+{##}
+{#		                        </div>#}
+		                        <div class="col-sm-3">Quantity</div>
+		                        <div class="col-sm-9 col-md-4">
+		                            <div class="input-group mb-3">
+		                                <button class="btn btn-outline-secondary" id="add" type="button">+</button>
+		                                <input type="text" class="form-control" id="goods_num" aria-label="购买数量" value="1">
+		                                <button class="btn btn-outline-secondary" id="reduce" type="button">-</button>
+		                            </div>
+
+		                        </div>
+		                    </div>
+                            {{ csrf_input }}
+
+		                    <div class="d-flex gap-3 mt-3">
+		                           <div class="col">
+                                  <button type="button" id="goods_buy" class="btn btn-outline-success px-5">Checkout</button>
+                                   </div>
+{#                                   <div class="col">#}
+{#                                   <button type="button" class="btn btn-outline-secondary  px-5 bsa-radius-30">#}
+{#                                    <i class="bi bi-cart me-1"></i>加入购物车#}
+{#                                    </button>#}
+{#                                </div>#}
+                                          <div class="col">
+                      <button type="button" class="btn btn-outline-success position-relative me-lg-5">
+                         <a class="nav-link" href="/shop/add/cart/{{ good.id }}">
+                        <i class="bi bi-cart me-1"></i>Add to cart
+                      </a>
+
+                     </button>
+                      </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+{#		        <hr/>#}
+		    </div>
+
+
+    <script src="{{ static('/js/vue.js') }}"></script>
+    <script src="{{ static('/js/query_cookie.js') }}"></script>
+
+  <script>
+
+  let tag=document.getElementsByClassName('shop-btn');
+
+
+        if(tag[1].id=='Register') {
+            tag[1].onclick = function () {
+                window.location = "{{ url('register') }}";
+
+            }
+
+        }else if(tag[1].id='Logout'){
+            tag[1].onclick=function (){
+                $.get('/Logout/', function(){
+                    location.reload();
+                })
+            }
+
+            }
+        if(tag[0].id=='Login'){
+            tag[0].onclick= function (){
+                window.location='{{ url('Login') }}'
+            }
+        }
+  </script>
+    <script>
+    let addbtn =$('#add')
+			  let minuxbtn =$('#reduce')
+			  let goods_num =$('#goods_num')
+              let good_num=1;
+			  addbtn.click(function(){
+				  let num =goods_num.val();
+				  num =Number(num) +1;
+				  good_num= num;
+				  goods_num.attr('value',num)
+			  });
+			  minuxbtn.click(function(){
+				  let num =goods_num.val();
+				  num =Number(num);
+				  if(num ==1){
+					   goods_num.val(num);
+				  }
+				  else{
+					  good_num =num-1;
+					  goods_num.attr('value',num-1);
+				  }
+
+			  });
+			  let buy =$('#goods_buy');
+               let  csrf_token = $('[name="csrfmiddlewaretoken"]').val();
+
+			  let price = ($('#goods_price').text())*1;
+              console.log(good_num, typeof(good_num))
+              console.log(price,typeof(price))
+               let total =(price * good_num)
+              console.log(total,typeof(total))
+			  buy.click(function(){
+                  console.log(good_num, typeof(good_num))
+                   let total =(price*good_num).toString()
+                  console.log(total,typeof(price))
+				 $.ajax({
+                     url: "/shop/payment/",
+                     type:'post',
+                     dataType: 'json',
+                     contentType:'application/json;charset=utf8',
+                     headers: {
+                         'X-CSRFToken': $.cookie('csrftoken')
+                     },
+                     data: JSON.stringify({'goods_id':1 , 'total_count':total , 'pay_method':1}),
+                     success: function (res) {
+                         if (res['code'] == '200') {
+                             window.location = res['alipay_url'];
+
+                         } else if(res['code']=='4003'){
+                             window.location='{{ url('Login') }}';
+                         }else{
+                             console.log(res);
+                         }
+                     }
+                     },
+                 );
+			  });
+    </script>
+{% endblock %}

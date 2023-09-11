@@ -1,0 +1,147 @@
+
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="icon" href="../../static/images/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="../../static/images/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+    <meta name="keywords" content="响应式后台模板,开源免费后台模板,Bootstrap5后台管理系统模板">
+    <meta name="description" content="Bootstrap-Admin基于bootstrap5的免费开源的响应式后台管理模板">
+    <meta name="author" content="ajiho">
+    <link rel="stylesheet" href="../../static/lib/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/bootstrap-admin.min.css">
+    <title>Bootstrap-Admin - 开源免费响应式后台管理系统模板</title>
+</head>
+<body>
+
+<div class="min-vh-100 d-flex justify-content-center align-items-center py-3 bsa-bg-login2">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12  col-sm-7 col-xl-6 mx-auto p-2 bsa-bg-glass">
+                <div class="row g-0">
+                    <div class="col d-none d-lg-block">
+                        <div class="card border-0 h-100 bg-secondary text-white bsa-opacity-80">
+                            <div class="card-body">
+                                <h5 class="card-title">Bootstrap-Admin</h5>
+                                <p class="card-text mt-3">
+                                    基于bootstrap5.1.x设计的一个静态后台管理HTML模板，旨在快速让喜欢用bootstrap开发的后台程序员有个愉悦的起点。
+                                </p>
+                                <p class="card-text mt-3">
+                                    Copyright © 2022 欲饮琵琶码上催 All right reserved.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card border-0 h-100">
+                            <div class="card-body">
+                                <form id="form" class="form" @submit="Login_reg" action="/Login/" method="post">
+                                    {{ csrf_input }}
+                                    <div class="mb-3">
+                                        <label for="username" class="form-label">Account Number</label>
+                                        <input type="text" v-model="type" @blur="type_check" class="form-control" id="username" name="username"
+                                               placeholder="Email/Username/Phone">
+                                    </div>
+                                    <span class="error_tip" v-show="type_condition">${error_message[0]['type_error']}</span>
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label">Password</label>
+                                        <input type="password" @blur="password_check" v-model="password" class="form-control" id="password" name="password"
+                                               placeholder="Please Input Password">
+                                    </div>
+                                    <span class="error_tip" v-show="password_condition">${error_message[1]['password_error']}</span>
+                                    <div class="mb-3">
+                                        <label for="captcha" class="form-label">Captcha</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" v-model="verify_code" @blur="check_verify_code"   class="form-control"  id="captcha" name="captcha"
+                                                   placeholder="Please Input Captcha">
+                                             <div class="col">
+                                             <button type="button" id="img" class="btn btn-outline-info"><i class="bi bi-arrow-clockwise me-0"></i>send</button>
+
+                                             </div>
+
+                                        </div>
+                                         <div class="col">
+                                                  <button type="button" disabled="true" id="image" class="btn btn-light px-5"></button>
+                                                   </div>
+                                        <span class="error_tip" v-show="verify_code_condition">${error_message[2]['verify_code_error']}</span>
+
+
+                                    </div>
+                                    <input type="hidden" id="uuid" name="uuid" >
+
+                                    <div class="mb-3">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="exampleCheck1"
+                                                   name="remember" >
+                                            <label class="form-check-label" for="exampleCheck1">Keep Me Sign In</label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 d-grid gap-2">
+                                        <button id="login-btn" type="submit" class="btn btn-secondary">Login In</button>
+                                    </div>
+									<div class="col-12">
+									    <div class="d-grid gap-2">
+                                            <a href="/shop/">
+									        <button type="button"  class="btn btn-success btn-lg px-5">Home
+									        </button>
+                                            </a>
+									    </div>
+									</div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../static/js/bootstrap.bundle.min.js"></script>
+<script src="../../static/js/bootstrap-admin.min.js"></script>
+<script src="{{ static('/js/vue.js') }}"></script>
+<script src="{{ static('/js/userapp/Login.js') }}"></script>
+<script src="../../static/js/userapp/Login.js"></script>
+<script src="../../static/js/vue.js"></script>
+<script src="{{ static('js/query.js') }}"></script>
+<script src="{{ static('js/userapp/UUID.js') }}"></script>
+
+<script>
+
+        let timeClock;
+        function sendCode() {
+        let timer_num = 60;
+        timeClock=setInterval(function(){
+         timer_num--;
+        $('#img').html(timer_num);
+        $('#img').attr('disabled', true)
+         if (timer_num == 0) {
+             clearInterval(timeClock);
+             $('#img').html('send');
+             $('#img').attr('disabled',false);
+
+         }
+     },1000)
+
+ }
+      let uuid=getUuid();
+        $('#uuid').val(uuid);
+
+        let urls='/ImageVerify/'+uuid+'/';
+
+      $('#img').click(function (){
+               sendCode();
+               $.get(urls, function (data){
+                   $('#image').html(data)
+
+           });
+
+
+
+      })
+
+</script>
+
+</body>
+</html>

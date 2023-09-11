@@ -1,0 +1,193 @@
+{% extends 'base.html'%}
+
+{% block register %}
+
+<div class="card border-top border-0 border-4 border-danger">
+		    <div class="card-body p-5">
+		        <div class="card-title d-flex align-items-center">
+		            <div><i class="bi bi-person me-1 bsa-font-20 text-danger"></i>
+		            </div>
+		            <h5 class="mb-0 text-danger">User Register</h5>
+		        </div>
+		        <hr>
+		        <form class="row g-3" id="mod"  action="/register/" @submit="reg_submit" method="post">
+                    {{ csrf_input }}
+		            <div class="col-md-6">
+		                <label for="username2" class="form-label">last name</label>
+		                <div class="input-group">
+		                    <span class="input-group-text bg-transparent">
+		                        <i class="bi bi-person"></i>
+		                    </span>
+		                    <input type="text" v-model="last_name" @blur="check_last_name" class="form-control border-start-0" id="username2" placeholder="input last name" name="username2" autocomplete="off">
+							<span class="error_tip" v-show="last_name_condition" >${error_message[4]['error_last_name']}</span>
+
+		                </div>
+		            </div>
+		            <div class="col-md-6">
+		                <label for="name2" class="form-label">first name</label>
+		                <div class="input-group">
+		                    <span class="input-group-text bg-transparent">
+		                        <i class="bi bi-person"></i>
+		                    </span>
+		                    <input type="text" v-model="first_name" @blur="check_first_name"  class="form-control border-start-0" id="name2" placeholder="input first name" name="name2" autocomplete="off">
+						    <span class="error_tip" v-show="first_name_condition" >${error_message[5]['error_first_name']}</span>&nbsp;&nbsp;&nbsp;
+                            <span class="error_tip" v-show="recheck_username_condition">${error_message[6]['error_recheck_username']}</span>
+
+		                </div>
+
+		            </div>
+		            <div class="col-12">
+		                <label for="phone2" class="form-label">phone</label>
+		                <div class="input-group">
+		                    <span class="input-group-text bg-transparent">
+		                        <i class="bi bi-phone" ></i>
+		                    </span>
+		                    <input type="text" @blur="check_phone" v-model="phone" class="form-control border-start-0" id="phone2" placeholder="input phone number" name="phone2" autocomplete="off">
+							<span class="error_tip" v-show="phone_condition"  >${error_message[0]['error_phone']}</span>
+                            <span class="error_tip" v-show="recheck_phone_condition"  >${error_message[7]['error_recheck_phone']}</span>
+		                </div>
+		            </div>
+		            <div class="col-12">
+		                <label for="email2" class="form-label">email</label>
+		                <div class="input-group">
+		                    <span class="input-group-text bg-transparent">
+		                        <i class="bi bi-envelope"></i>
+		                    </span>
+		                    <input type="text" v-model="email" @blur="check_email" class="form-control border-start-0" id="email2" name="email2" placeholder="input email" autocomplete="off">
+							<span class="error_tip" v-show="email_condition" >${error_message[1]['error_email']}</span>
+		                </div>
+		            </div>
+		            <div class="col-12">
+		                <label for="password2" class="form-label">password</label>
+		                <div class="input-group">
+		                    <span class="input-group-text bg-transparent">
+		                        <i class="bi bi-shield-lock"></i>
+		                    </span>
+		                    <input type="password" v-model="password" @blur="check_password" class="form-control border-start-0" id="password2" name="password2" placeholder="input password" autocomplete="off">
+							<span class="error_tip" v-show="password_condition">${error_message[2]['error_password']}</span>
+		                </div>
+		            </div>
+		            <div class="col-12">
+		                <label for="confirm_password" class="form-label">Confirm Password</label>
+		                <div class="input-group"><span class="input-group-text bg-transparent"><i class="bi bi-shield-lock"></i></span>
+		                    <input type="password" v-model="comfirm" @blur="check_comfirm" class="form-control border-start-0" id="confirm_password" name="confirm_password" placeholder="confirm password" autocomplete="off">
+
+							<span class="error_tip" v-show="comfirm_condition" >${error_message[3]['error_comfirm']} </span>
+		                </div>
+		            </div>
+		            <div class="col-12">
+		                <div class="form-check">
+                            <div class="mb-3">
+                                <label for="captcha" class="form-label">Captcha</label>
+	                                 <div class="input-group mb-3">
+	                                    <input type="text" class="form-control"   id="captcha" name="captcha" placeholder="Please input email captcha">
+
+                                         <div class="col">
+	   		                                     <button type="button"  id="btn-success"  class="btn btn-success px-5 bsa-radius-30">Send</button>
+                                            </div>
+
+
+
+	       </div>
+                                 <input type="hidden" class="form-control" id="uuid" name="uuid">
+
+	   </div>
+
+	   <div class="mb-3">
+	       <div class="form-check">
+	           <input type="checkbox" class="form-check-input" id="exampleCheck1"
+	                  name="remember" >
+	           <label class="form-check-label" for="exampleCheck1">keep me sign in</label>
+	       </div>
+	   </div>
+		                </div>
+		            </div>
+		            <div class="col-12">
+		                <button type="submit" class="btn btn-danger px-5">register</button>
+		            </div>
+					<hr>
+					<div class="col-12 text-center">
+{#					    <p class="mb-0">other ways :</p>#}
+					</div>
+					<div class="col-12">
+					    <div class="d-grid gap-2">
+                            <a href="/shop/">
+					        <button type="button" class="btn btn-success btn-lg px-5">Home
+					        </button>
+                            </a>
+					    </div>
+					</div>
+		        </form>
+		    </div>
+		</div>
+
+    <script type="text/javascript " src=" ../../static/js/vue.js"></script>
+    <script src="{{ static('js/query.js') }}"></script>
+    <script src="{{ static('js/userapp/UUID.js') }}"></script>
+    <script src=" ../../static/js/userapp/register.js"></script>
+    <script>
+        let timeClock;
+        function sendCode() {
+        let timer_num = 60;
+        timeClock=setInterval(function(){
+         timer_num--;
+        $('#btn-success').html(timer_num);
+        $('#btn-success').attr('disabled', true)
+         if (timer_num == 0) {
+             clearInterval(timeClock);
+             $('#btn-success').html('send');
+             $('#btn-success').attr('disabled',false);
+
+         }
+     },1000)
+
+ }
+        let uuid=getUuid();
+        $('#uuid').val(uuid);
+
+        let url='/EmailVerify/'+uuid+'/';
+
+      $('#btn-success').click(function (){
+           let email =$('#email2').val();
+           if(!email){
+               window.confirm('please input your email')
+           }else{
+               sendCode();
+               $.get(url,{'email':email}, function (data){
+               if(data['code']==200){
+                   window.confirm('Email captcha has sent')
+               }else{
+                   clearInterval(timeClock);
+                   alert(data)
+               }
+           });
+
+           }
+
+      })
+
+    </script>
+{#    <script>#}
+{#    let timeClock;#}
+{#    function sendCode() {#}
+{#     let timer_num = 60;#}
+{#     timeClock=setInterval(function(){#}
+{#         timer_num--;#}
+{##}
+{#        $('#btn-success').html(timer_num);#}
+{#         if (timer_num == 0) {#}
+{#             clearInterval(timeClock);#}
+{#             $('#btn-success').html('send');#}
+{#         }#}
+{#     },1000)#}
+{##}
+{# }#}
+{# $("#btn-success").click(function(){#}
+{# 	sendCode();#}
+{# })#}
+{##}
+{#</script>#}
+
+
+
+{% endblock %}
