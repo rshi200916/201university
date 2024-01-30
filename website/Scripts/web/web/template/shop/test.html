@@ -1,0 +1,111 @@
+{% extends 'base_shop.html'%}
+
+{% block test %}
+    	<nav class="navbar navbar-expand-lg navbar-dark btn-danger rounded">
+			    <div class="container-fluid"><a class="navbar-brand" href="javascript:">kind</a>
+			        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navcnt3" aria-controls="navcnt3" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
+			        </button>
+			        <div class="collapse navbar-collapse" id="navcnt3">
+			            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			                <li class="nav-item">
+			                    <a class="nav-link active" aria-current="page" href="/shop/kind/furniture/">
+			                        <i class="bi bi-bookmark me-1"></i>Furniture
+			                    </a>
+			                </li>
+			                <li class="nav-item">
+			                    <a class="nav-link" href="/shop/kind/book/">
+			                        <i class="bi bi-bookmark me-1"></i>Book
+			                    </a>
+			                </li>
+			                <li class="nav-item">
+			                    <a class="nav-link" href="/shop/kind/kitchenware">
+			                        <i class="bi bi-bookmark me-1"></i>Kitchenware
+			                    </a>
+			                </li>
+			                <li class="nav-item">
+			                    <a class="nav-link" href="/shop/kind/bags/">
+			                        <i class="bi bi-bookmark me-1"></i>Luggage and Bags
+			                    </a>
+			                </li>
+			            </ul>
+
+			        </div>
+			    </div>
+			</nav>
+    {% for good in goods %}
+         <div class="bsa-main-content">
+    	<div class="card border-0 shadow-sm">
+			    <div class="row g-0">
+			        <div class="col-md-3 d-flex align-items-center bg-light">
+			            <img src="{{ good.img_url.url }}" style="width: 370px; height: 300px " class="card-img">
+			        </div>
+			        <div class="col-md-8">
+			            <div class="card-body">
+			                <h5 class="card-title">{{ good.name }}</h5>
+{#			                <p class="card-text bsa-ellipsis3">#}
+{#			                    {{ good.comment }}#}
+{#			                </p>#}
+							<div class="row g-3 align-items-center">
+                                <div class="col-sm-3"></div>
+							    <div class="col-sm-9">
+{#							        浙江杭州至 上海 卢湾区 快递: 0.00#}
+							    </div>
+
+
+							    <div class="col-sm-3">price</div>
+							    <div class="col-sm-9">
+							        <h4 class="fw-bold text-danger" id="goods_price">{{ good.price }}</h4>
+							    </div>
+{#							    <div class="col-sm-3"></div>#}
+{#							    <div class="col-sm-9">#}
+{#							        浙江杭州至 上海 卢湾区 快递: 0.00#}
+{#							    </div>#}
+{#							    <div class="col-sm-3">颜色</div>#}
+							    <div class="col-sm-9">
+{#							        <div class="d-flex align-items-center gap-2">#}
+{##}
+{#							            <div class="bsa-color-indigator-item bg-primary"></div>#}
+{#							            <div class="bsa-color-indigator-item bg-warning"></div>#}
+{#							            <div class="bsa-color-indigator-item bg-dark"></div>#}
+{#							            <div class="bsa-color-indigator-item bg-danger"></div>#}
+{#							            <div class="bsa-color-indigator-item bg-success"></div>#}
+{#							        </div>#}
+							    </div>
+							    <div class="col-sm-3"></div>
+							    <div class="col-sm-9 col-md-4">
+							        <div class="input-group mb-3">
+{#							            <button class="btn btn-outline-secondary" id="add" type="button">+</button>#}
+{#							            <input type="text" class="form-control" value="1" id="goods_num" aria-label="购买数量" >#}
+{#							            <button class="btn btn-outline-secondary" id="minus" type="button">-</button>#}
+							        </div>
+{##}
+							    </div>
+								<div class="d-flex gap-3 mt-3">
+                                    <div class="col">
+                     <button type="button" class="btn btn-outline-success position-relative me-lg-5">
+                         <a class="nav-link" href="/shop/page/{{ good.id }}">
+                        <i class="bi bi-grid me-1"></i>Options
+                      </a>
+                     </button>
+                    </div>
+                    <div class="col">
+                     <button type="button" class="btn btn-outline-success position-relative me-lg-5">
+                         <a class="nav-link" href="/shop/add/cart/{{ good.id }}">
+                        <i class="bi bi-cart me-1"></i>Add to cart
+                      </a>
+                     </button>
+                    </div>
+
+								</div>
+							</div>
+
+			            </div>
+			        </div>
+			    </div>
+			</div>
+         </div>
+
+    {% endfor %}
+
+
+{% endblock %}
